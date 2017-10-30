@@ -111,7 +111,7 @@ class SearchView(ListView):
 
 class FavouriteView(ListView):
     """
-                To display favourite movies of authenticated user
+        To display favourite movies of authenticated user
     """
     model = favorites
     template_name = 'home.html'
@@ -150,9 +150,6 @@ class GenreView(ListView):
         context = super(GenreView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
         return context
-
-
-
 
 
 class CatView(ListView):

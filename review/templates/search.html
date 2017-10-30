@@ -3,41 +3,46 @@
 {% block title %}<title>Movies</title>{% endblock %}
 
 {% block content %}
-<form action="/search/">
-    <div class="form-group">
+<form action="/search/" class="form-inline">
+    <center><div class="form-group" align="center">
         <label for="name">Search Term:</label>
-        <input type="text" class="form-control" id="name" name="name">
-        <label for="genre">Genre :</label>
-        <select class="form-control" id="genre" name="genre">
-            <option selected="selected">All</option>
-            <option>Action</option>
-            <option>Adventure</option>
-            <option>Animation</option>
-            <option>Comedy</option>
-            <option>Crime</option>
-            <option>Documentary</option>
-            <option>Drama</option>
-            <option>Family</option>
-            <option>Fantasy</option>
-            <option>History</option>
-            <option>Horror</option>
-            <option>Music</option>
-            <option>Mystery</option>
-            <option>Romance</option>
-            <option>Science Fiction</option>
-            <option>TV Movie</option>
-            <option>Thriller</option>
-            <option>War</option>
-            <option>Western</option>
-        </select>
-        <label for="order">Genre :</label>
-        <select class="form-control" id="order" name="order">
-            <option selected="selected">Latest</option>
-            <option>Oldest</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block" >Search</button>
+        <input type="text" class="form-control" id="name" name="name" style="width:500px">
+        &nbsp;
+            <label for="genre">Genre :</label>
+            <select class="form-control" id="genre" name="genre" style="width:200px">
+                <option selected="selected">All</option>
+                <option>Action</option>
+                <option>Adventure</option>
+                <option>Animation</option>
+                <option>Comedy</option>
+                <option>Crime</option>
+                <option>Documentary</option>
+                <option>Drama</option>
+                <option>Family</option>
+                <option>Fantasy</option>
+                <option>History</option>
+                <option>Horror</option>
+                <option>Music</option>
+                <option>Mystery</option>
+                <option>Romance</option>
+                <option>Science Fiction</option>
+                <option>TV Movie</option>
+                <option>Thriller</option>
+                <option>War</option>
+                <option>Western</option>
+            </select>
+        &nbsp;
+            <label for="order">Order :</label>
+            <select class="form-control" id="order" name="order" style="width:200px">
+                <option selected="selected">Latest</option>
+                <option>Oldest</option>
+            </select>
+        &nbsp;
+                <button type="submit" class="btn btn-primary" style="width:100px">Search</button>
+
+    </div></center>
 </form>
+<br>
 <div class="container">
     <div class="row">
 
@@ -55,15 +60,15 @@
             </div>
         </div>
         {% empty %}
-<div class="w3-row w3-padding-80" style="margin-top: 20px">
-    <div class="w3-container">
-        <div class="w3-container">
-            <br>
-            <br>
-            <h3>"Sorry no Movies found matching your query "</h3>
+        <div class="w3-row w3-padding-80" style="margin-top: 20px">
+            <div class="w3-container">
+                <div class="w3-container">
+                    <br>
+                    <br>
+                    <h3>"Sorry no Movies found matching your query "</h3>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
         {% endfor %}
     </div>
 </div>

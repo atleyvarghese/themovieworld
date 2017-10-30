@@ -97,6 +97,12 @@ class SearchView(ListView):
         else:
             return Movies.objects.all().order_by('-rel_date')
 
+        def get_context_data(self, **kwargs):
+            context = super(SearchView, self).get_context_data(**kwargs)
+            context['genre1'] = self.request.GET['genre']
+            context['sort1'] = self.request.GET['order']
+
+
 
 class FavouriteView(ListView):
     """

@@ -1,0 +1,16 @@
+from celery.task.schedules import crontab
+from celery.decorators import periodic_task
+from review.models import Movie_List, Movies, Genre
+
+
+<style type="text/css">
+.bgimg {
+    background-image: url('../images/divbg.png');
+}
+</style>
+
+...
+
+<div class="bgimg">
+    div with background
+</div>

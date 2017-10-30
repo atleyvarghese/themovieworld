@@ -1,0 +1,40 @@
+<style>
+  .w3-sidebar {
+    z-index: 3;
+  width: 250px;
+  top: 50px;
+  bottom: 0;
+  height: inherit;
+}
+
+</style>
+
+<!-- Sidebar -->
+
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 " style="display:none!important;" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()"
+       class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+        <i class="fa fa-remove"></i>
+    </a>
+    <br>
+
+    <br>
+    {% if user.is_authenticated %}
+        <p class="w3-bar-item w3-button hidden-md, hidden-lg shown-sm, shown-xs">Accounts</p>
+        <div class="dropdown"><a class="dropdown-toggle w3-bar-item w3-button hidden-md, hidden-lg shown-sm, shown-xs" data-toggle="dropdown" href="">Hi {{ user.username }}<span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="w3-bar-item w3-button" href="/account/profileedit/"><span class="glyphicon glyphicon-edit"></span> Profile Edit</a>
+                    </li>
+                    <li><a class="w3-bar-item w3-button" href="/account/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+        </div>
+    {% else %}
+        <a class="hidden-md, hidden-lg shown-sm, shown-xs w3-bar-item w3-button" href="/account/signup/"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+        <a class="hidden-md, hidden-lg shown-sm, shown-xs w3-bar-item w3-button" href="/account/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+    {% endif %}
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+     id="myOverlay"></div>

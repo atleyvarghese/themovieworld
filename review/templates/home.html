@@ -1,0 +1,51 @@
+{% extends 'base1.html' %}
+
+{% block title %}<title>Movies</title>{% endblock %}
+
+{% block content %}
+   <div class="container">
+       <div class="row">
+           {% for item in movies %}
+               <div class="col-sm-6 col-md-4" style="padding-top: 20px">
+                   <div class=" img-thumbnail" style="height: 500px; width: 300px">
+                       <a href="{% url 'detail' item.slug %}"><img src="{{ item.image }}" alt="IMAGE" style="display: block;margin: auto;max-width: 100%;
+                                                   height: auto;"/></a>
+                       <div class="caption" align="center">
+                           <h4><a href="{% url 'detail' item.slug %}">{{ item.title }}</a></h4>
+                           <div class="date">
+                               <p><h6>{{ item.rel_date }} </h6></p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           {% endfor %}
+       </div>
+   </div>
+{% if is_paginated %}
+    <div class="text">
+        <center>
+            <ul class="pagination ">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </center>
+    </div>
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,73 @@
+<div class="w3-row w3-padding-64">
+    <div class="w3-container">
+        <fieldset>
+            {% load comments %}
+            <div id="load-with-ajax">
+                {% get_comment_count for review.movies movie.id as comment_count %}
+                <div class="alert alert-info">
+                    <p><b>{{ comment_count }} Comments</b></p>
+                </div>
+
+                {% get_comment_list for review.movies movie.id as comment_list %}
+                {% if comment_list %}
+                <div id="comment_list">
+                    {% for comment in comment_list %}
+
+                    <!-- <a href="#c{{ comment.id }}">Link</a><br/>
+                    <span id="c{{ comment.id }}"></span> -->
+
+                    <b>{{ comment.user_name }}<span class="pull-right"> {{ comment.submit_date }}</span><br/>
+                    </b><i>{{ comment.comment }}</i>
+                    <!-- <a href="{% get_comment_permalink comment %}">[ permalink ] </a> -->
+                    <hr/>
+
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <hr/>
+            </div>
+
+            {% if user.is_authenticated %}
+            {% get_comment_form for review.movies movie.id as form %}
+
+            <form action="/comments/post/" method="post" id="post_comments">
+                {% csrf_token %}
+                <input class="form-control" type="hidden" name="name" id="id_name" maxlength="50"/><br>
+                <input class="form-control" type="hidden" name="email" id="id_email"/> <br>
+                <input class="form-control" type="hidden" name="url" id="id_url"/> <br>
+                <textarea class="form-control" name="comment" required id="id_comment" cols="60" rows="5"
+                          maxlength="3000"></textarea><br>
+                <form action="{% comment_form_target %}" method="POST">
+
+                    <input type="hidden" name="honeypot" id="id_honeypot"/>
+                    {{ form.content_type }}
+                    {{ form.object_pk }}
+                    {{ form.timestamp }}
+                    {{ form.security_hash }}
+
+                    <input type="hidden" name="submit" onclick="return false;" value="submit">
+                    <button class="btn btn-warning btn-small btn-block" type="button" id="submit_post" value="Post">
+                        Post
+                    </button>
+                </form>
+            </form>
+
+            {% else %}
+            <p> Please <a href="/account/login/">log in</a> to leave a comment.</p>
+            {% endif %}
+        </fieldset>
+    </div>
+</div>
+<!-- -->
+<script>
+$("#submit_post").click(function(){
+      $.ajax( {url: '/comments/post/', type:'post', data: $("#post_comments").serialize(),
+          success: function (){
+                 $("#load-with-ajax").load(" #load-with-ajax");
+                 $("#post_comments")[0].reset();
+          } } );
+
+
+});
+
+</script>

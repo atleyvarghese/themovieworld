@@ -1,0 +1,10 @@
+celery==4.1.0
+Django==1.11.6
+django-allauth==0.33.0
+django-autoslug==1.9.3
+django-contrib-comments==1.8.0
+Pillow==4.3.0
+psycopg2==2.7.3.2
+tmdbsimple==1.8.0
+whitenoise==3.3.0
+gunicorn==19.7.1

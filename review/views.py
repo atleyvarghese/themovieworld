@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView
 
-from review.models import Movies, favorites
+from review.models import Movies, favorites, Genre
 from .tasks import collect_movie
 
 
@@ -15,6 +15,11 @@ class MovieListView(ListView):
     paginate_by = 9
     context_object_name = 'movies'
     queryset = Movies.objects.all().order_by('-rel_date')
+
+    def get_context_data(self, **kwargs):
+        context = super(MovieListView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        return context
 
 
 class MovieDetailView(DetailView):
@@ -29,6 +34,7 @@ class MovieDetailView(DetailView):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         get_slug = self.kwargs['slug']
         context['movie'] = Movies.objects.get(slug=get_slug)
+        context['genre'] = Genre.objects.all()
         if self.request.user.is_authenticated:
             if favorites.objects.filter(user_id=self.request.user.id).exists():
                 obj = favorites.objects.filter(user__id=self.request.user.id)
@@ -97,11 +103,10 @@ class SearchView(ListView):
         else:
             return Movies.objects.all().order_by('-rel_date')
 
-        def get_context_data(self, **kwargs):
-            context = super(SearchView, self).get_context_data(**kwargs)
-            context['genre1'] = self.request.GET['genre']
-            context['sort1'] = self.request.GET['order']
-
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        return context
 
 
 class FavouriteView(ListView):
@@ -122,7 +127,54 @@ class FavouriteView(ListView):
             obj.save()
             return obj.list.all().order_by('-rel_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(FavouriteView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        return context
 
+
+class GenreView(ListView):
+    """
+        To List Movies based on genre
+    """
+    model = Movies
+    template_name = 'home.html'
+    paginate_by = 9
+    context_object_name = 'movies'
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs['pk']
+        return Movies.objects.filter(genre__id=pk)
+
+    def get_context_data(self, **kwargs):
+        context = super(GenreView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        return context
+
+
+
+
+
+class CatView(ListView):
+    """
+        To List Movies based on genre
+    """
+    model = Movies
+    template_name = 'home.html'
+    paginate_by = 6
+    context_object_name = 'movies'
+
+    def get_queryset(self, **kwargs):
+        cat = self.kwargs['cat']
+        if cat=='latest':
+            return Movies.objects.all().order_by('-rel_date')[:9]
+        else:
+            return Movies.objects.all().order_by('-popularity')
+
+    def get_context_data(self, **kwargs):
+        context = super(CatView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        return context
 
 
 

@@ -7,7 +7,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Navbar -->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
 
         <div class="navbar-header">
@@ -22,19 +22,28 @@
             {%endif%}
             <li><a class="hidden-sm, hidden-xs" href="/search/">Search</a></li>
             {% if user.is_superuser %}
-            <button><a class="hidden-sm, hidden-xs" onclick="myFunction()">Collect Data</a></button>
+            <li><a class="hidden-sm, hidden-xs" onclick="myFunction()">Collect Data</a></li>
             {% endif%}
-            <!--<li><a class="hidden-sm, hidden-xs" href="/pages/about/">About</a></li>-->
-            <!--<li><a class="hidden-sm, hidden-xs" href="/contact/">Contact us</a></li>-->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Genre
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% for item in genre %}
+                    <li><a href="{% url 'genre-view' item.id %}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><a class="hidden-sm, hidden-xs" href="{% url 'category' 'popular' %}">Popular Movies</a></li>
+            <li><a class="hidden-sm, hidden-xs" href="{% url 'category' 'latest' %}">Latest Movies</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Hi {% if not user.first_name %}
-                    {{ user.username }}
+                {{ user.username }}
                 {% else %}
-                    {{ user.first_name }}
+                {{ user.first_name }}
                 {% endif %}<span
-                    class="caret"></span></a>
+                        class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/account/profileedit/"><span class="glyphicon glyphicon-edit"></span> Profile Edit</a>
                     </li>

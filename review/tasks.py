@@ -6,6 +6,9 @@ from review.models import Movie_List, Movies, Genre
 
 @shared_task
 def collect_movie():
+    """
+        To List Movies based on genre
+    """
     tmdb.API_KEY = '22ce6e6a848dfc0fd4376e55d8890949'
     obj = Movie_List.objects.filter(collected=False)
     if obj:

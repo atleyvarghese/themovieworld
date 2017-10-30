@@ -3,6 +3,7 @@
 {% block title %}<title>Movies</title>{% endblock %}
 
 {% block content %}
+<br><br><br><br>
    <div class="container">
        <div class="row">
            {% for item in movies %}
@@ -11,7 +12,7 @@
                        <a href="{% url 'detail' item.slug %}"><img src="{{ item.image }}" alt="IMAGE" style="display: block;margin: auto;max-width: 100%;
                                                    height: auto;"></a>
                        <div class="caption" align="center">
-                           <h4><a href="{% url 'detail' item.slug %}">{{ item.title }}</a></h4>
+                           <h4><a href="{% url 'detail' item.slug %}" style="color:#090909;">{{ item.title }}</a></h4>
                            <div class="date">
                                <p><h6>{{ item.rel_date }} </h6></p>
                            </div>

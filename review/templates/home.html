@@ -1,9 +1,23 @@
 {% extends 'base1.html' %}
 
-{% block title %}<title>Movies</title>{% endblock %}
+{% block title %}<title>{{ title }}</title>{% endblock %}
 
 {% block content %}
+<style>
+body{
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.9) 100%),
+    url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/vfPFP3W/movie-theater-film-reel-background-in-seamless-loop_xk6ivnb9__F0000.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+    height: 100%;
+}
+</style>
+<div>
 <br><br><br><br>
+
+<h2 style="padding-left: 75px;">{{ type }} Movies :</h2>
+<hr>
    <div class="container">
        <div class="row">
            {% for item in movies %}
@@ -19,6 +33,16 @@
                        </div>
                    </div>
                </div>
+           {% empty %}
+        <div class="w3-row w3-padding-80" style="margin-top: 20px">
+            <div class="w3-container">
+                <div class="w3-container">
+                    <br>
+                    <br>
+                    <h3>"Sorry no Movies found matching your query "</h3>
+                </div>
+            </div>
+        </div>
            {% endfor %}
        </div>
    </div>
@@ -49,5 +73,5 @@
     </div>
 
     {% endif %}
-
+</div>
 {% endblock %}

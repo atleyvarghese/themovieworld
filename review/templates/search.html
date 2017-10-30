@@ -1,8 +1,19 @@
 {% extends 'base1.html' %}
 
-{% block title %}<title>Movies</title>{% endblock %}
+{% block title %}<title>{{ title }}</title>{% endblock %}
 
 {% block content %}
+<style>
+.bgimg {
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.9) 100%),
+    url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/vfPFP3W/movie-theater-film-reel-background-in-seamless-loop_xk6ivnb9__F0000.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+}
+</style>
+<div class="bgimg">
+
 <br><br><br><br>
 
 <form action="/search/" class="form-inline">
@@ -100,5 +111,5 @@
 </div>
 
 {% endif %}
-
+</div>
 {% endblock %}

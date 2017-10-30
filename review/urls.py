@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^favorites/$', views.favourite,),
     url(r'^search/$', SearchView.as_view(),name='search'),
     url(r'^favourite/$', FavouriteView.as_view()),
-    url(r'^genre/(?P<pk>\w+)/$', GenreView.as_view(),name='genre-view'),
+    url(r'^genre/(?P<pk>\d+)/$', GenreView.as_view(),name='genre-view'),
     url(r'^category/(?P<cat>\w+)/$', CatView.as_view(),name='category'),
 
 ]

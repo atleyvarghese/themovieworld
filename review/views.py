@@ -19,6 +19,8 @@ class MovieListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
+        context['type'] = 'Latest'
+        context['title'] = 'Movies'
         return context
 
 
@@ -44,6 +46,8 @@ class MovieDetailView(DetailView):
                 context['fav']=False
         else:
             context['fav'] = False
+        obj = Movies.objects.get(slug=get_slug)
+        context['title'] = obj.title
         return context
 
 
@@ -106,6 +110,7 @@ class SearchView(ListView):
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
+        context['title'] = 'Search'
         return context
 
 
@@ -130,6 +135,8 @@ class FavouriteView(ListView):
     def get_context_data(self, **kwargs):
         context = super(FavouriteView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
+        context['type'] = 'My Favorite'
+        context['title'] = 'Favorites'
         return context
 
 
@@ -144,11 +151,14 @@ class GenreView(ListView):
 
     def get_queryset(self, **kwargs):
         pk = self.kwargs['pk']
-        return Movies.objects.filter(genre__id=pk)
+        return Movies.objects.filter(genre__id=pk).order_by('-rel_date')
 
     def get_context_data(self, **kwargs):
         context = super(GenreView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
+        obj = Genre.objects.get(id=self.kwargs['pk'])
+        context['type'] = obj.name
+        context['title'] = obj.name
         return context
 
 
@@ -171,6 +181,13 @@ class CatView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CatView, self).get_context_data(**kwargs)
         context['genre'] = Genre.objects.all()
+        cat = self.kwargs['cat']
+        if cat == 'latest':
+            context['type'] = 'Latest'
+            context['title'] = 'Latest Movies'
+        else:
+            context['type'] = 'Popular'
+            context['title'] = 'Popular Movies'
         return context
 
 

@@ -7,7 +7,7 @@ urlpatterns = [
 
     url(r'^$',MovieListView.as_view()),
     url(r'(?P<slug>[\w-]+)$', MovieDetailView.as_view(), name='detail'),
-    url(r'^collect/$', views.collect_movie,name='collect'),
+    url(r'^collect/$', views.collect_movies,name='collect'),
     url(r'^favorites/$', views.favourite,),
     url(r'^search/$', SearchView.as_view(),name='search'),
     url(r'^favourite/$', FavouriteView.as_view(), ),

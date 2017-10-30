@@ -42,7 +42,7 @@ class MovieDetailView(DetailView):
 
 
 
-def collect_movie(request):
+def collect_movies(request):
     """
         To call celery to perform api call for uncollected movies in Movie_List model
     """

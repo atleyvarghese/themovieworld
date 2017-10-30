@@ -24,7 +24,7 @@ def collect_movie():
             url="https://www.youtube.com/embed/"+movie.results[0]['key']
             new.video = url
             response = movie.images()
-            url = "https://image.tmdb.org/t/p/w1920/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
+            url = "https://image.tmdb.org/t/p/w1280/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
             new.backdrop=url
             new.save()
             movies.collected=True

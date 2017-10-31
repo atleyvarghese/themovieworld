@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView
 
-from review.models import Movies, favorites
+from review.models import Movies, favorites, Genre
 from .tasks import collect_movie
 
 
@@ -15,6 +15,13 @@ class MovieListView(ListView):
     paginate_by = 9
     context_object_name = 'movies'
     queryset = Movies.objects.all().order_by('-rel_date')
+
+    def get_context_data(self, **kwargs):
+        context = super(MovieListView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        context['type'] = 'Latest'
+        context['title'] = 'Movies'
+        return context
 
 
 class MovieDetailView(DetailView):
@@ -29,6 +36,7 @@ class MovieDetailView(DetailView):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         get_slug = self.kwargs['slug']
         context['movie'] = Movies.objects.get(slug=get_slug)
+        context['genre'] = Genre.objects.all()
         if self.request.user.is_authenticated:
             if favorites.objects.filter(user_id=self.request.user.id).exists():
                 obj = favorites.objects.filter(user__id=self.request.user.id)
@@ -38,11 +46,13 @@ class MovieDetailView(DetailView):
                 context['fav']=False
         else:
             context['fav'] = False
+        obj = Movies.objects.get(slug=get_slug)
+        context['title'] = obj.title
         return context
 
 
 
-def collect_movie(request):
+def collect_movies(request):
     """
         To call celery to perform api call for uncollected movies in Movie_List model
     """
@@ -97,10 +107,16 @@ class SearchView(ListView):
         else:
             return Movies.objects.all().order_by('-rel_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        context['title'] = 'Search'
+        return context
+
 
 class FavouriteView(ListView):
     """
-                To display favourite movies of authenticated user
+        To display favourite movies of authenticated user
     """
     model = favorites
     template_name = 'home.html'
@@ -116,7 +132,63 @@ class FavouriteView(ListView):
             obj.save()
             return obj.list.all().order_by('-rel_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(FavouriteView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        context['type'] = 'My Favorite'
+        context['title'] = 'Favorites'
+        return context
 
+
+class GenreView(ListView):
+    """
+        To List Movies based on genre
+    """
+    model = Movies
+    template_name = 'home.html'
+    paginate_by = 9
+    context_object_name = 'movies'
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs['pk']
+        return Movies.objects.filter(genre__id=pk).order_by('-rel_date')
+
+    def get_context_data(self, **kwargs):
+        context = super(GenreView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        obj = Genre.objects.get(id=self.kwargs['pk'])
+        context['type'] = obj.name
+        context['title'] = obj.name
+        return context
+
+
+class CatView(ListView):
+    """
+        To List Movies based on genre
+    """
+    model = Movies
+    template_name = 'home.html'
+    paginate_by = 6
+    context_object_name = 'movies'
+
+    def get_queryset(self, **kwargs):
+        cat = self.kwargs['cat']
+        if cat=='latest':
+            return Movies.objects.all().order_by('-rel_date')[:9]
+        else:
+            return Movies.objects.all().order_by('-popularity')
+
+    def get_context_data(self, **kwargs):
+        context = super(CatView, self).get_context_data(**kwargs)
+        context['genre'] = Genre.objects.all()
+        cat = self.kwargs['cat']
+        if cat == 'latest':
+            context['type'] = 'Latest'
+            context['title'] = 'Latest Movies'
+        else:
+            context['type'] = 'Popular'
+            context['title'] = 'Popular Movies'
+        return context
 
 
 

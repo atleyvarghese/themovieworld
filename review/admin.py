@@ -1,6 +1,4 @@
 from django.contrib import admin
-
-# Register your models here.
 from review.models import Genre, Movies, Movie_List, favorites
 
 
@@ -24,12 +22,11 @@ uncollected.short_description = "Mark selected Movies as not collected"
 class MoviesAdmin(admin.ModelAdmin):
     actions = [make_published,make_unpublished]
     search_fields = ['title']
-    # readonly_fields = ('image_tag',)
+
 
 class Movies_listAdmin(admin.ModelAdmin):
     actions = [collected,uncollected]
     search_fields = ['title']
-    # readonly_fields = ('image_tag',)
 
 
 

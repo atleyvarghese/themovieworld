@@ -1,43 +1,61 @@
 {% extends 'base1.html' %}
 
-{% block title %}<title>Movies</title>{% endblock %}
+{% block title %}<title>{{ title }}</title>{% endblock %}
 
 {% block content %}
-<form action="/search/">
-    <div class="form-group">
+<style>
+.bgimg {
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.9) 100%),
+    url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/vfPFP3W/movie-theater-film-reel-background-in-seamless-loop_xk6ivnb9__F0000.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+}
+</style>
+<div class="bgimg">
+
+<br><br><br><br>
+
+<form action="/search/" class="form-inline">
+    <center><div class="form-group" align="center">
         <label for="name">Search Term:</label>
-        <input type="text" class="form-control" id="name" name="name">
-        <label for="genre">Genre :</label>
-        <select class="form-control" id="genre" name="genre">
-            <option selected="selected">All</option>
-            <option>Action</option>
-            <option>Adventure</option>
-            <option>Animation</option>
-            <option>Comedy</option>
-            <option>Crime</option>
-            <option>Documentary</option>
-            <option>Drama</option>
-            <option>Family</option>
-            <option>Fantasy</option>
-            <option>History</option>
-            <option>Horror</option>
-            <option>Music</option>
-            <option>Mystery</option>
-            <option>Romance</option>
-            <option>Science Fiction</option>
-            <option>TV Movie</option>
-            <option>Thriller</option>
-            <option>War</option>
-            <option>Western</option>
-        </select>
-        <label for="order">Genre :</label>
-        <select class="form-control" id="order" name="order">
-            <option selected="selected">Latest</option>
-            <option>Oldest</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block" >Search</button>
+        <input type="text" class="form-control" id="name" name="name" style="width:500px">
+        &nbsp;
+            <label for="genre">Genre :</label>
+            <select class="form-control" id="genre" name="genre" style="width:200px">
+                <option selected="selected">All</option>
+                <option>Action</option>
+                <option>Adventure</option>
+                <option>Animation</option>
+                <option>Comedy</option>
+                <option>Crime</option>
+                <option>Documentary</option>
+                <option>Drama</option>
+                <option>Family</option>
+                <option>Fantasy</option>
+                <option>History</option>
+                <option>Horror</option>
+                <option>Music</option>
+                <option>Mystery</option>
+                <option>Romance</option>
+                <option>Science Fiction</option>
+                <option>TV Movie</option>
+                <option>Thriller</option>
+                <option>War</option>
+                <option>Western</option>
+            </select>
+        &nbsp;
+            <label for="order">Order :</label>
+            <select class="form-control" id="order" name="order" style="width:200px">
+                <option selected="selected">Latest</option>
+                <option>Oldest</option>
+            </select>
+        &nbsp;
+                <button type="submit" class="btn btn-primary" style="width:100px">Search</button>
+
+    </div></center>
 </form>
+<br>
 <div class="container">
     <div class="row">
 
@@ -47,7 +65,7 @@
                 <a href="{% url 'detail' item.slug %}"><img src="{{ item.image }}" alt="IMAGE" style="display: block;margin: auto;max-width: 100%;
                                                    height: auto;"/></a>
                 <div class="caption" align="center">
-                    <h4><a href="{% url 'detail' item.slug %}">{{ item.title }}</a></h4>
+                    <h4><a href="{% url 'detail' item.slug %}" style="color:#090909;">{{ item.title }}</a></h4>
                     <div class="date">
                         <p><h6>{{ item.rel_date }} </h6></p>
                     </div>
@@ -55,15 +73,15 @@
             </div>
         </div>
         {% empty %}
-<div class="w3-row w3-padding-80" style="margin-top: 20px">
-    <div class="w3-container">
-        <div class="w3-container">
-            <br>
-            <br>
-            <h3>"Sorry no Movies found matching your query "</h3>
+        <div class="w3-row w3-padding-80" style="margin-top: 20px">
+            <div class="w3-container">
+                <div class="w3-container">
+                    <br>
+                    <br>
+                    <h3>"Sorry no Movies found matching your query "</h3>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
         {% endfor %}
     </div>
 </div>
@@ -93,5 +111,5 @@
 </div>
 
 {% endif %}
-
+</div>
 {% endblock %}

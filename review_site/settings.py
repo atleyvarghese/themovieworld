@@ -25,7 +25,7 @@ SECRET_KEY = '9%d*@nlz8)%vlut%mz_)aom+8*2gijq7zi7x8&%7!mobf(c2uz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ ]
+ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost']
 
 
 # Application definition
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'review_site.urls'
@@ -78,7 +79,7 @@ TEMPLATES = [
         },
     },
 ]
-
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -124,13 +125,13 @@ WSGI_APPLICATION = 'review_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-#
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -185,19 +186,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
-# ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Movie Review] "
-
 LOGIN_URL = '/account/login/'
 
-# ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
-
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/account/login/'
-
 ACCOUNT_EMAIL_REQUIRED = True
-
-# ACCOUNT_AUTHENTICATION_METHOD ="username_email"
-
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
@@ -208,15 +199,16 @@ APPEND_SLASH = True
 ACCOUNT_ADAPTER = "allauth.account.adapter.DefaultAccountAdapter"
 
 CELERY_BROKER_URL = 'amqp://localhost'
+
 #Celery - rabbit server starting stopping and status
 # sudo invoke-rc.d rabbitmq-server start
 # sudo rabbitmqctl stop
 # sudo rabbitmqctl status
-#In another tab with virtualenv activated - run this to start the celery task process command: celery -A maze worker -l info
+#In another tab with virtualenv activated - run this to start the celery task process command: celery -A review_site worker -l info
 
 
 # below code for periodic mail
-#we run command: celery -A maze worker -B -l info
+#we run command: celery -A review_site worker -B -l info
 
 # from celery.schedules import crontab
 #

@@ -18,7 +18,7 @@ class MovieListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
-        context['genre'] = Genre.objects.all()
+        context['genres'] = Genre.objects.all()
         context['type'] = 'Latest'
         context['title'] = 'Movies'
         return context
@@ -36,7 +36,7 @@ class MovieDetailView(DetailView):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         get_slug = self.kwargs['slug']
         context['movie'] = Movies.objects.get(slug=get_slug)
-        context['genre'] = Genre.objects.all()
+        context['genres'] = Genre.objects.all()
         if self.request.user.is_authenticated:
             if favorites.objects.filter(user_id=self.request.user.id).exists():
                 obj = favorites.objects.filter(user__id=self.request.user.id)
@@ -64,23 +64,23 @@ def favourite(request):
     """
         Function check whether a movie is added to favourite and add it to favourite when clicked
     """
-    ctx = {}
+    status = {}
     if favorites.objects.filter(user_id=request.user.id).exists():
-        obj=favorites.objects.filter(user__id=request.user.id)
-        if obj[0].list.filter(id=request.GET.get('id')).exists():
-            obj[0].list.remove(Movies.objects.get(id=int(request.GET.get('id'))))
-            ctx['status'] = 0
-            return JsonResponse(ctx)
+        favorite=favorites.objects.filter(user__id=request.user.id)
+        if favorite[0].list.filter(id=request.GET.get('id')).exists():
+            favorite[0].list.remove(Movies.objects.get(id=int(request.GET.get('id'))))
+            status['status'] = 0
+            return JsonResponse(status)
         else:
-            obj[0].list.add(Movies.objects.get(id=int(request.GET.get('id'))))
-            ctx['status'] = 1
-            return JsonResponse(ctx)
+            favorite[0].list.add(Movies.objects.get(id=int(request.GET.get('id'))))
+            status['status'] = 1
+            return JsonResponse(status)
     else:
-        obj=favorites.objects.create(user_id=request.user.id)
-        obj.list.add(Movies.objects.get(id=int(request.GET.get('id'))))
-        obj.save()
-        ctx['status'] = 1
-        return JsonResponse(ctx)
+        favorite=favorites.objects.create(user_id=request.user.id)
+        favorite.list.add(Movies.objects.get(id=int(request.GET.get('id'))))
+        favorite.save()
+        status['status'] = 1
+        return JsonResponse(status)
 
 
 class SearchView(ListView):
@@ -109,7 +109,7 @@ class SearchView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
-        context['genre'] = Genre.objects.all()
+        context['genres'] = Genre.objects.all()
         context['title'] = 'Search'
         return context
 
@@ -125,16 +125,16 @@ class FavouriteView(ListView):
 
     def get_queryset(self):
         if favorites.objects.filter(user_id=self.request.user.id).exists():
-            obj=favorites.objects.get(user_id=self.request.user.id)
-            return obj.list.all().order_by('-rel_date')
+            favorite=favorites.objects.get(user_id=self.request.user.id)
+            return favorite.list.all().order_by('-rel_date')
         else:
-            obj = favorites.objects.create(user_id=self.request.user.id)
-            obj.save()
-            return obj.list.all().order_by('-rel_date')
+            favorite = favorites.objects.create(user_id=self.request.user.id)
+            favorite.save()
+            return favorite.list.all().order_by('-rel_date')
 
     def get_context_data(self, **kwargs):
         context = super(FavouriteView, self).get_context_data(**kwargs)
-        context['genre'] = Genre.objects.all()
+        context['genres'] = Genre.objects.all()
         context['type'] = 'My Favorite'
         context['title'] = 'Favorites'
         return context
@@ -155,16 +155,16 @@ class GenreView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(GenreView, self).get_context_data(**kwargs)
-        context['genre'] = Genre.objects.all()
-        obj = Genre.objects.get(id=self.kwargs['pk'])
-        context['type'] = obj.name
-        context['title'] = obj.name
+        context['genres'] = Genre.objects.all()
+        movie = Genre.objects.get(id=self.kwargs['pk'])
+        context['type'] = movie.name
+        context['title'] = movie.name
         return context
 
 
-class CatView(ListView):
+class CategoryView(ListView):
     """
-        To List Movies based on genre
+        To List Movies based on Category
     """
     model = Movies
     template_name = 'home.html'
@@ -172,17 +172,17 @@ class CatView(ListView):
     context_object_name = 'movies'
 
     def get_queryset(self, **kwargs):
-        cat = self.kwargs['cat']
-        if cat=='latest':
+        category = self.kwargs['category']
+        if category=='latest':
             return Movies.objects.all().order_by('-rel_date')[:9]
         else:
             return Movies.objects.all().order_by('-popularity')
 
     def get_context_data(self, **kwargs):
-        context = super(CatView, self).get_context_data(**kwargs)
-        context['genre'] = Genre.objects.all()
-        cat = self.kwargs['cat']
-        if cat == 'latest':
+        context = super(CategoryView, self).get_context_data(**kwargs)
+        context['genres'] = Genre.objects.all()
+        category = self.kwargs['category']
+        if category == 'latest':
             context['type'] = 'Latest'
             context['title'] = 'Latest Movies'
         else:

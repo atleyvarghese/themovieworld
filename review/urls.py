@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from review import views
-from review.views import MovieListView, MovieDetailView, SearchView, FavouriteView, GenreView, CatView
+from review.views import MovieListView, MovieDetailView, SearchView, FavouriteView, GenreView, CategoryView
 
 urlpatterns = [
 
@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^search/$', SearchView.as_view(),name='search'),
     url(r'^favourite/$', FavouriteView.as_view()),
     url(r'^genre/(?P<pk>\d+)/$', GenreView.as_view(),name='genre-view'),
-    url(r'^category/(?P<cat>\w+)/$', CatView.as_view(),name='category'),
+    url(r'^category/(?P<category>\w+)/$', CategoryView.as_view(),name='category'),
 
 ]

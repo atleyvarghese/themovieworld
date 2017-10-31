@@ -1,5 +1,5 @@
-
 {% extends 'base1.html' %}
+{% load ratings %}
 {% block title %}<title>{{ title }}</title>{% endblock %}
 
 {% block content %}
@@ -44,15 +44,20 @@ body{
         <div class="row">
 
             <div class="col-sm-5">
-                <h1>{{ movie.title }} ({{ movie.rel_date.year }})</h1><br />
+                <h1>{{ movie.title }} ({{ movie.rel_date.year }})<span>&emsp;{% if user.is_authenticated %}
 
-
-                {% if user.is_authenticated %}
                 {% if fav %}
                 <i id="p1" onclick="newfunction({{movie.id}})" class="fa fa-heart"></i>
                 {%else%}
                 <i id="p2" onclick="newfunction({{movie.id}})" class="fa fa-heart-o"></i>
                 {% endif %}
+                {% endif %}
+
+                </span></h1>
+                {% if user.is_authenticated %}
+                {% ratings movie %}
+                {% else %}
+                <br>
                 {% endif %}
                 <p><h4>Genre : {% for item in movie.genre.all %}
                 {{item.name}}{% if not forloop.last %},{%endif%}
@@ -61,8 +66,16 @@ body{
                 <p><h4>Synopsis : {{ movie.synopsis }}</h4> </p><br />
                 <iframe src="{{ movie.video }}"
                         width="560" height="315" frameborder="0" allowfullscreen></iframe>
-
-
+<br>
+                <br>
+                <h4>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://themovieworld.herokuapp.com/{{ movie.slug }}"
+           class="fa fa-facebook">    Share on Facebook</a><br>
+        <a href="https://twitter.com/home?status=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-twitter">  Share on
+            Twitter</a><br>
+        <a href="https://plus.google.com/share?url=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-google">   Share on
+            Google+</a><br>
+                </h4>
             </div>
         </div>
     </div>

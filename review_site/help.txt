@@ -1,6 +1,6 @@
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
-from review.models import Movie_List, Movies, Genre
+from review.models import MovieList, Movie, Genre
 
 
 <style type="text/css">

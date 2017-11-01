@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'review.apps.ReviewConfig',
-    'accounts.apps.AccountsConfig',
+    'apps.review',
+    'apps.accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'review_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -197,7 +197,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 APPEND_SLASH = True
 
-ACCOUNT_ADAPTER = "allauth.account.adapter.DefaultAccountAdapter"
+SOCIALACCOUNT_ADAPTER = 'apps.accounts.my_adapter.SocialAccountAdapter'
 
 CELERY_BROKER_URL = 'amqp://localhost'
 

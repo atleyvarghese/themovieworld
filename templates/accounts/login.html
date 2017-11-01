@@ -1,0 +1,126 @@
+{% extends "base4.html" %}
+{% block title %}
+<title>Login</title>
+{% endblock %}
+{% load i18n %}
+<style>
+  body {
+    padding-top: 15px;
+    font-size: 12px
+  }
+  .main {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .login-or {
+    position: relative;
+    font-size: 18px;
+    color: #aaa;
+    margin-top: 10px;
+            margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .span-or {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    margin-left: -25px;
+    background-color: #fff;
+    width: 50px;
+    text-align: center;
+  }
+  .hr-or {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+  }
+  h3 {
+    text-align: center;
+    line-height: 300%;
+  }
+
+</style>
+{% block side %}
+{% include 'accounts/sidebar2.html' %}
+{% endblock %}
+{% block content %}
+
+<div class="col-xs-12" style="height:50px;"></div>
+
+<div class="container">
+    <div class="row">
+
+        <div class="main">
+
+            <h3>Please Log In, or <a href="/account/signup/">Sign Up</a></h3>
+            <br>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2"></div>
+
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <a href="/accounts/facebook/login/?process=login" class="btn btn-lg btn-primary btn-block">Facebook</a>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <a href="/accounts/google/login/?process=login" class="btn btn-lg btn-info btn-block">Google</a>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2"></div>
+
+            </div>
+            <div class="login-or">
+                <hr class="hr-or">
+
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-2"></div>
+
+            <div class="col-xs-10 col-sm-10 col-md-8">
+                <form class="login" method="POST" action="{% url 'account_login' %}" id="LoginForm" name="LoginForm">
+                    {% csrf_token %}
+
+
+                        {% if form.errors %}
+                        {% for value in form.errors.values %}
+                        <div class="alert alert-warning alert-dismissable fade in">
+                            <a class="panel-close close" data-dismiss="alert">×</a>
+                            {{ value }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                    <div class="col-md-3 personal-info"></div>
+                    <br>
+                    <div class="form-group">
+                        <label for="form.id_login">Username or Email</label>
+                        <input input type="text" name="login" required="" placeholder="Username" autofocus="autofocus"
+                               id="form.id_login" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <a class="pull-right" href="/account/password/reset/">Forgot password?</a>
+                        <label for="form.id_password">Password</label>
+                        <input type="password" name="password" required="" placeholder="Password" id="form.id_password"
+                               class="form-control">
+                    </div>
+                    <div class="checkbox pull-right">
+                        <label>
+                            <input type="checkbox" name="remember" id="id_remember">
+                            Remember me </label>
+                    </div>
+                    <button type="submit" class="btn btn btn-primary">
+                        Log In
+                    </button>
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+
+                </form>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-2"></div>
+
+        </div>
+    </div>
+    <div class="col-xs-12" style="height:50px;"></div>
+</div>
+</div>
+{% endblock %}

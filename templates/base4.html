@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Title</title>
+    {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon"  href="/media/media/favicon.ico"/>
+    <style>
+        html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+        html {
+            height: 100%;
+        }
+        .page-wrap {
+            min-height: 75%;
+         /* equal to footer height */
+            margin-bottom: auto;
+            }
+        .page-wrap:after {
+         content: "";
+           display: block;
+           }
+        .site-footer, .page-wrap:after {
+          height: auto;
+            }
+        .site-footer {
+          background: orange;
+        }
+        body{
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.9) 100%),
+    url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/vfPFP3W/movie-theater-film-reel-background-in-seamless-loop_xk6ivnb9__F0000.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+    height: 100%;
+}
+
+
+    </style>
+</head>
+
+<body>
+<div class="page-wrap">
+    {% block Nav %}
+    {% include 'accounts/Navbar2.html' %}
+    {% endblock %}
+    <br>
+    <br>
+    {% block content%}
+
+    {% endblock %}
+
+    {% block extra_js %}
+    {% endblock %}
+
+    {% block comment %}
+    {% endblock %}
+
+</div>
+</div>
+{% block foot %}
+{% include 'accounts/footer.html' %}
+{% endblock %}
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+</script>
+
+
+</body>
+</html>

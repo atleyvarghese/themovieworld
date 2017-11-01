@@ -6,9 +6,9 @@ from review_site import settings
 
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^account/', include('accounts.urls')),
+    url(r'^account/', include('apps.accounts.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^',include('review.urls')),
+    url(r'^',include('apps.review.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,

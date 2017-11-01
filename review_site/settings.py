@@ -25,7 +25,7 @@ SECRET_KEY = '9%d*@nlz8)%vlut%mz_)aom+8*2gijq7zi7x8&%7!mobf(c2uz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost','devthemovieworld.herokuapp.com']
 
 
 # Application definition

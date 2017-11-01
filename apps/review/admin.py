@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from apps.review.models import Genre, Movie, MovieList, Favorites
 
 

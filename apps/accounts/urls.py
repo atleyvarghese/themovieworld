@@ -3,14 +3,14 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from apps.accounts.views import MySignupView, MyLoginView, MyEmailVerificationSentView, MyConfirmEmailView, \
-    MyPasswordChangeView, MyPasswordSetView, MySucessView, editprofileView, MyPasswordResetView, \
+    MyPasswordChangeView, MyPasswordSetView, MySucessView, EditprofileView, MyPasswordResetView, \
     MyPasswordResetDoneView, MyPasswordResetFromKeyView, MyEmailView
 
 urlpatterns = [
     url(r"^signup/$", MySignupView.as_view(), name="account_signup"),
     url(r"^login/$", MyLoginView.as_view(), name="account_login"),
     url(r"^logout/$", views.logout, name="account_logout"),
-    url(r"^profileedit/$", login_required(editprofileView.as_view()), name="account_edit"),
+    url(r"^profileedit/$", login_required(EditprofileView.as_view()), name="account_edit"),
 
     url(r"^password/change/$", MyPasswordChangeView.as_view(),
         name="account_change_password"),

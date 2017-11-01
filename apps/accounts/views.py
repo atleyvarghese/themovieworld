@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, FormView
 from apps.accounts.forms.forms import editform
 
 
-class editprofileView(FormView):
+class EditprofileView(FormView):
     template_name = 'accounts/profile_edit.html'
     form_class = editform
     success_url = '/account/sucess/'
@@ -17,7 +17,7 @@ class editprofileView(FormView):
         user.last_name = form.cleaned_data['lastname']
         user.email = form.cleaned_data['email']
         user.save()
-        return super(editprofileView, self).form_valid(form)
+        return super(EditprofileView, self).form_valid(form)
 
 
 class MySignupView(SignupView):

@@ -1,11 +1,10 @@
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 
 from apps.review.models import Movie, Favorites, Genre
 from .tasks import collect_movie
-from django.utils.translation import ugettext_lazy as _
-
 
 
 class MovieListView(ListView):

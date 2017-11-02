@@ -12,10 +12,9 @@ class editprofileView(FormView):
     success_url = '/account/sucess/'
 
     def form_valid(self, form):
-        user = User.objects.get_by_natural_key(username=form.cleaned_data['username'])
+        user = User.objects.get_by_natural_key(username=self.request.user.username)
         user.first_name = form.cleaned_data['firstname']
         user.last_name = form.cleaned_data['lastname']
-        user.email = form.cleaned_data['email']
         user.save()
         return super(editprofileView, self).form_valid(form)
 

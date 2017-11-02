@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.review.models import Genre, Movie, MovieList, Favorites
+from apps.review.models import Genre, Movie, MovieList, Favorites, CastAndCrew, Role
 
 
 def make_published(modeladmin, request, queryset):
@@ -30,10 +30,14 @@ class MovieslistAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ['role', 'movie']
 
 admin.site.register(Movie,MoviesAdmin)
 admin.site.register(Genre)
 admin.site.register(MovieList,MovieslistAdmin)
 admin.site.register(Favorites)
+admin.site.register(Role,RoleAdmin)
+admin.site.register(CastAndCrew)
 
 

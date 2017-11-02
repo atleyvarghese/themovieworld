@@ -36,6 +36,27 @@ class MovieList(models.Model):
         verbose_name = "Movie List"
 
 
+class CastAndCrew(models.Model):
+    """
+        Details about Cast And Crew
+    """
+    name = models.CharField(_('Name'), max_length=200)
+    api_id = models.IntegerField()
+    biography = models.TextField(_('Biography'), default='Biography yet to added',null=True, blank=True)
+    image = models.URLField(_('Image'), null=True, blank=True)
+    popularity=models.IntegerField(default=1,null=True, blank=True)
+    slug = AutoSlugField(populate_from='name',
+                         unique_with=['api_id'],
+                         unique=True, always_update=True)
+
+    class Meta:
+        verbose_name_plural = "Cast And Crew"
+
+    def __str__(self):
+        return self.name
+
+
+
 class Movie(models.Model):
     """
         Details about Movies
@@ -53,12 +74,28 @@ class Movie(models.Model):
                          unique=True, always_update=True)
     published = models.BooleanField(_('Published'), default=False)
     backdrop = models.URLField(_('Background'), null=True, blank=True)
+    cast = models.ManyToManyField(CastAndCrew, through='Role',blank=True)
 
     class Meta:
         verbose_name_plural = "Movies"
 
     def __str__(self):
         return self.title
+
+
+class Role(models.Model):
+    """
+            Details about Role and Movie associated
+    """
+    movie = models.ForeignKey(Movie)
+    crew = models.ForeignKey(CastAndCrew)
+    role = models.CharField(_('Role'),max_length=200)
+
+    class Meta:
+        verbose_name_plural = "Role"
+
+    def __str__(self):
+        return self.role
 
 
 class Favorites(models.Model):

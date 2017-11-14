@@ -88,7 +88,7 @@ class Role(models.Model):
             Details about Role and Movie associated
     """
     movie = models.ForeignKey(Movie)
-    crew = models.ForeignKey(CastAndCrew)
+    crew = models.ForeignKey(CastAndCrew,related_name='role_crew')
     role = models.CharField(_('Role'),max_length=200)
 
     class Meta:

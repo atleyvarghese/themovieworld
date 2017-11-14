@@ -3,8 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 
-from apps.review.models import Movie, Favorites, Genre
-from .tasks import collect_movie
+from apps.review.models import Movie, Favorites, Genre, CastAndCrew
+from .tasks import collect_movie, collect_a_movie
 
 
 class MovieListView(ListView):
@@ -36,7 +36,8 @@ class MovieDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         get_slug = self.kwargs['slug']
-        context['movie'] = Movie.objects.get(slug=get_slug)
+        movie = Movie.objects.get(slug=get_slug)
+        context['movie'] = movie
         context['genres'] = Genre.objects.all()
         if self.request.user.is_authenticated:
             if Favorites.objects.filter(user_id=self.request.user.id).exists():
@@ -47,8 +48,27 @@ class MovieDetailView(DetailView):
                 context['fav']=False
         else:
             context['fav'] = False
+        context['cast'] = movie.cast.all()
+        context['roles'] = movie.role_set.all()
+        context['roles1'] = zip(context['cast'],context['roles'])
         obj = Movie.objects.get(slug=get_slug)
         context['title'] = obj.title
+        return context
+
+
+class PeopleDetailView(DetailView):
+    """
+    To display Movie in detail
+    """
+    model = CastAndCrew
+    template_name = 'review/people_detail.html'
+    context_object_name = 'people'
+
+    def get_context_data(self, **kwargs):
+        context = super(PeopleDetailView, self).get_context_data(**kwargs)
+        people = CastAndCrew.objects.get(slug=self.kwargs['slug'])
+        context['people'] = people
+        context['title'] = people.name
         return context
 
 
@@ -58,7 +78,19 @@ def collect_movies(request):
         To call celery to perform api call for uncollected movies in Movie_List model
     """
     collect_movie.delay()
-    return HttpResponse()
+    return HttpResponse('')
+
+
+def collect_a_movie_data(request):
+    """
+        To call celery to perform api call for uncollected movies in Movie_List model
+    """
+    # import pdb
+    # pdb.set_trace()
+    if request.GET.get('id'):
+    # id = 12445
+        collect_a_movie.delay(request.GET.get('id'))
+    return HttpResponse("")
 
 
 def favourite(request):
@@ -117,7 +149,7 @@ class SearchView(ListView):
 
 class FavouriteView(ListView):
     """
-        To display favourite movies of authenticated user
+        To display favourite movies for authenticated user
     """
     model = Favorites
     template_name = 'review/home.html'

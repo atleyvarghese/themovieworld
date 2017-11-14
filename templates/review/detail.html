@@ -22,6 +22,32 @@
 * {
     opacity:1;
 }
+div.card1 {
+  float:left;
+  margin:15px;
+  text-align:center;
+}
+
+.images {
+  display: flex;
+  padding: 5px;
+
+}
+.img-holder {
+  position: relative;
+  margin: 12px;
+  align-self: flex-start;
+  width:100px;
+}
+.img-holder p {
+  position: absolute;
+  padding: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
 
 </style>
 <style type="text/css">
@@ -35,7 +61,7 @@ body{
 
 </style>
 {% if movie %}
-<div>
+<div >
     <div class="row">
         <div class="col-sm-6">
             <img src="{{ movie.image }}" alt="IMAGE" style="display: block;margin: auto;max-width: 100%;
@@ -62,21 +88,51 @@ body{
                 {%endfor%}</h4></p>
                 <p><h4>Released on : {{ movie.rel_date }}</h4> </p>
                 <p><h4>Synopsis : {{ movie.synopsis }}</h4> </p><br />
-                <iframe src="{{ movie.video }}"
-                        width="560" height="315" frameborder="0" allowfullscreen></iframe>
-<br>
+                <p><h4>Cast & Crew:</h4></p>
                 <br>
-                <h4>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://themovieworld.herokuapp.com/{{ movie.slug }}"
-           class="fa fa-facebook">    Share on Facebook</a><br>
-        <a href="https://twitter.com/home?status=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-twitter">  Share on
-            Twitter</a><br>
-        <a href="https://plus.google.com/share?url=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-google">   Share on
-            Google+</a><br>
-                </h4>
+                <div class="images">
+                     {% for item,it in  roles1 %}
+                    <div class="img-holder">
+                     {% if item.image %}
+                        {% if item.image and item.biography %}
+                        <a href="{% url 'people-detail' item.slug %}"><img src="{{item.image}}" class="img-circle" style="max-width:100%;"></a>
+                        {%else%}
+                        <img src="{{item.image}}" class="img-circle" style="max-width:100%;">
+                        {% endif %}
+                        {%else%}
+                    <img src="/media/media/rsz_b.jpg" class="img-circle" style="max-width:100%;">
+                    {% endif %}
+                        {% if item.image and item.biography %}
+                        <a href="{% url 'people-detail' item.slug %}" style="color:#090909;"><p>{{item.name}}<span><br><i>({{it}})</i></span></p></a>
+                    {%else%}
+                        <p>{{item.name}}<span><br><i>({{it}})</i></span></p>
+                    {% endif %}
+
+                     </div>
+                    {% endfor %}
+
             </div>
+            <br><br><br><br><br><br>
+
+            <!--<iframe src="{{ movie.video }}"-->
+                    <!--width="560" height="315" frameborder="0" allowfullscreen></iframe>-->
+            <br>
+            <br>
+            <!--<h4>-->
+                <!--<a href="https://www.facebook.com/sharer/sharer.php?u=https://themovieworld.herokuapp.com/{{ movie.slug }}"-->
+                   <!--class="fa fa-facebook">    Share on Facebook</a><br>-->
+                <!--<a href="https://twitter.com/home?status=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-twitter">  Share on-->
+                    <!--Twitter</a><br>-->
+                <!--<a href="https://plus.google.com/share?url=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="fa fa-google">   Share on-->
+                    <!--Google+</a><br>-->
+            <!--</h4>-->
         </div>
     </div>
+</div>            <br><br><br><br><br><br>
+
+    <center>
+    <iframe class="" src="{{ movie.video }}"
+                    width="90%" height="720px" frameborder="0" allowfullscreen></iframe></center>
 </div>
 
 {% endif %}

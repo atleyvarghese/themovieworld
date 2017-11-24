@@ -12,8 +12,8 @@ class MovieListView(ListView):
         To List Movies
     """
     model = Movie
-    template_name = 'review/home.html'
-    paginate_by = 9
+    template_name = 'review/index.html'
+    paginate_by = 16
     context_object_name = 'movies'
     queryset = Movie.objects.all().order_by('-rel_date')
 

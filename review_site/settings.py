@@ -25,7 +25,7 @@ SECRET_KEY = '9%d*@nlz8)%vlut%mz_)aom+8*2gijq7zi7x8&%7!mobf(c2uz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost','devthemovieworld.herokuapp.com']
+ALLOWED_HOSTS = ['themovieworld.herokuapp.com','localhost','devthemovieworld.herokuapp.com','192.168.1.8']
 
 
 # Application definition
@@ -80,7 +80,7 @@ TEMPLATES = [
         },
     },
 ]
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -110,7 +110,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-WSGI_APPLICATION = 'review_site.wsgi.application'
+#WSGI_APPLICATION = 'review_site.wsgi.application'
 
 # DATABASES = {
 #     'default': {
@@ -169,10 +169,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, "staticfiles")
+]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -181,7 +188,7 @@ SITE_ID = 2
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'newscorner.atley@gmail.com'
-EMAIL_HOST_PASSWORD = '9388481936'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -200,6 +207,11 @@ APPEND_SLASH = True
 SOCIALACCOUNT_ADAPTER = 'apps.accounts.my_adapter.SocialAccountAdapter'
 
 CELERY_BROKER_URL = 'amqp://localhost'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 #Celery - rabbit server starting stopping and status
 # sudo invoke-rc.d rabbitmq-server start

@@ -67,7 +67,7 @@ class Movie(models.Model):
     rel_date = models.DateField(default='2017-08-11')
     add_date = models.DateTimeField(auto_now_add=True)
     image = models.URLField(_('Image'), null=True, blank=True)
-    video = models.URLField(_('Video'), null=True, blank=True)
+    video = models.CharField(_('Video'), null=True, blank=True, max_length=20)
     popularity=models.IntegerField(default=1)
     slug = AutoSlugField(populate_from='title',
                          unique_with=['title'],

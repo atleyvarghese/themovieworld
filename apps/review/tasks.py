@@ -55,8 +55,7 @@ def collect_movie():
                         cast.save()
                     role = Role.objects.create(role=item['job'],crew=cast,movie=new)
             response = movie.videos()
-            url="https://www.youtube.com/embed/"+movie.results[0]['key']
-            new.video = url
+            new.video =     new.video = movie.results[0]
             response = movie.images()
             url = "https://image.tmdb.org/t/p/w1280/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
             new.backdrop=url
@@ -114,8 +113,7 @@ def collect_a_movie(id):
                     cast.save()
             role = Role.objects.create(role=item['job'],crew=cast,movie=new)
     response = movie.videos()
-    url="https://www.youtube.com/embed/"+movie.results[0]['key']
-    new.video = url
+    new.video = movie.results[0]
     response = movie.images()
     url = "https://image.tmdb.org/t/p/w1280/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
     new.backdrop=url

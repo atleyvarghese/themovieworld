@@ -30,7 +30,7 @@ class MovieDetailView(DetailView):
     To display Movie in detail
     """
     model = Movie
-    template_name = 'review/detail.html'
+    template_name = 'review/details.html'
     context_object_name = 'movie'
 
     def get_context_data(self, **kwargs):
@@ -50,7 +50,7 @@ class MovieDetailView(DetailView):
             context['fav'] = False
         context['cast'] = movie.cast.all()
         context['roles'] = movie.role_set.all()
-        context['roles1'] = zip(context['cast'],context['roles'])
+        context['roles1'] = list(zip(context['cast'],context['roles']))
         obj = Movie.objects.get(slug=get_slug)
         context['title'] = obj.title
         return context

@@ -9,3 +9,4 @@ tmdbsimple==1.8.0
 whitenoise==3.3.0
 gunicorn==19.7.1
 django-star-ratings
+IMDbPY

@@ -5657,7 +5657,10 @@ ul {
   background-color: rgba(0, 0, 0, 0.75);
 }
 /*movie single hero*/
-
+.mv-single-hero {
+  background: url('../images/uploads/hero-bg.jpg') no-repeat;
+  height: 598px;
+}
 /*series single hero*/
 .sr-single-hero {
   background: url('../images/uploads/sr-single.jpg') no-repeat;
@@ -5669,14 +5672,14 @@ ul {
 }
 .common-hero {
   height: 385px;
-  background: url("{{ movie.backdrop }}") no-repeat;
+  background: url('../images/uploads/user-hero-bg.jpg') no-repeat;
 }
 .common-hero:before {
   background-color: rgba(0, 0, 0, 0.4);
 }
 .user-hero {
   height: 385px;
-  background: url("{{ movie.backdrop }}") no-repeat;
+  background: url('../images/uploads/user-hero-bg.jpg') no-repeat;
 }
 .user-hero .hero-ct {
   padding-top: 225px;
@@ -5708,7 +5711,7 @@ ul {
   background-color: rgba(0, 0, 0, 0.4);
 }
 .landing-hero {
-  background-image: url("{{ movie.backdrop }}");
+  background-image: url('../images/uploads/user-hero-bg.jpg');
   box-shadow: inset 0 0 1000px rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 110px 0;
@@ -5982,7 +5985,7 @@ ul {
 }
 .movie-single .movie-img .movie-btn .btn-transform.red,
 .movie-single .mv-ceb .movie-btn .btn-transform.red {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 .movie-single .movie-img .movie-btn .redbtn:hover,
 .movie-single .mv-ceb .movie-btn .redbtn:hover {
@@ -6912,7 +6915,6 @@ p.ceb-single {
   font-size: 36px;
   color: #222222;
   font-weight: 700;
-  text-transform: uppercase;
   margin-bottom: 45px;
   text-align: center;
 }
@@ -6980,14 +6982,12 @@ p.ceb-single {
   font-size: 14px;
   color: #222222;
   font-weight: bold;
-  text-transform: capitalize;
 }
 .overlay .login-content button {
   font-family: 'Dosis', sans-serif;
   font-size: 14px;
   color: #ffffff;
   font-weight: bold;
-  text-transform: uppercase;
   border: none;
   background-color: #dd003f;
   height: 42px;

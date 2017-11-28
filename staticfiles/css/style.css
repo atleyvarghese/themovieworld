@@ -5985,7 +5985,7 @@ ul {
 }
 .movie-single .movie-img .movie-btn .btn-transform.red,
 .movie-single .mv-ceb .movie-btn .btn-transform.red {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 .movie-single .movie-img .movie-btn .redbtn:hover,
 .movie-single .mv-ceb .movie-btn .redbtn:hover {
@@ -6915,7 +6915,6 @@ p.ceb-single {
   font-size: 36px;
   color: #222222;
   font-weight: 700;
-  text-transform: uppercase;
   margin-bottom: 45px;
   text-align: center;
 }
@@ -6983,14 +6982,12 @@ p.ceb-single {
   font-size: 14px;
   color: #222222;
   font-weight: bold;
-  text-transform: capitalize;
 }
 .overlay .login-content button {
   font-family: 'Dosis', sans-serif;
   font-size: 14px;
   color: #ffffff;
   font-weight: bold;
-  text-transform: uppercase;
   border: none;
   background-color: #dd003f;
   height: 42px;

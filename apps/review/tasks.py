@@ -3,6 +3,7 @@ from celery import shared_task
 import requests
 
 from apps.review.models import MovieList, Movie, Genre, CastAndCrew, Role
+import imdb
 
 
 @shared_task
@@ -17,9 +18,13 @@ def collect_movie():
             id=str(movies.api_id)
             movie = tmdb.Movies(id)
             response = movie.info()
+            imdb_id = movie.imdb_id
+            imdb_id = int(imdb_id.replace("t", ""))
+            ia = imdb.IMDb()
+            imdb_object = ia.get_movie(imdb_id)
             url='https://image.tmdb.org/t/p/w500/'+movie.poster_path+'?api_key=22ce6e6a848dfc0fd4376e55d8890949'
             Movie.objects.create(title=movie.title,synopsis=movie.overview,rel_date=movie.release_date,
-                                  image=url,popularity=movie.popularity)
+                                  image=url,popularity=movie.popularity,runtime=movie.runtime,imdb_rating=imdb_object['rating'])
             new=Movie.objects.last()
             if movie.genres:
                 for item in movie.genres:
@@ -55,7 +60,7 @@ def collect_movie():
                         cast.save()
                     role = Role.objects.create(role=item['job'],crew=cast,movie=new)
             response = movie.videos()
-            new.video =     new.video = movie.results[0]
+            new.video = movie.results[0]['key']
             response = movie.images()
             url = "https://image.tmdb.org/t/p/w1280/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
             new.backdrop=url
@@ -73,9 +78,13 @@ def collect_a_movie(id):
     id=str(id)
     movie = tmdb.Movies(id)
     response = movie.info()
+    imdb_id = movie.imdb_id
+    imdb_id = int(imdb_id.replace("t", ""))
+    ia = imdb.IMDb()
+    imdb_object = ia.get_movie(imdb_id)
     url='https://image.tmdb.org/t/p/w500/'+movie.poster_path+'?api_key=22ce6e6a848dfc0fd4376e55d8890949'
     Movie.objects.create(title=movie.title,synopsis=movie.overview,rel_date=movie.release_date,
-                        image=url,popularity=movie.popularity)
+                        image=url,popularity=movie.popularity,runtime=movie.runtime,imdb_rating=imdb_object['rating'])
     movie_list = MovieList.objects.create(title=movie.title,api_id=id,collected=True)
     movie_list.save()
     new=Movie.objects.last()
@@ -113,7 +122,7 @@ def collect_a_movie(id):
                     cast.save()
             role = Role.objects.create(role=item['job'],crew=cast,movie=new)
     response = movie.videos()
-    new.video = movie.results[0]
+    new.video = movie.results[0]['key']
     response = movie.images()
     url = "https://image.tmdb.org/t/p/w1280/"+movie.backdrops[0]['file_path']+"?api_key=22ce6e6a848dfc0fd4376e55d8890949"
     new.backdrop=url

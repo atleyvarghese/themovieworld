@@ -1,0 +1,46 @@
+{% extends "star_ratings/widget_base.html" %}
+{% load i18n %}
+{% block rating_stars %}
+<div class="movie-rate">
+<div class="rate star-ratings-rating-average">
+<i class="ion-android-star"></i>
+<p><span class="star-ratings-rating-value" >{{ rating.average|floatformat:"2"}}</span> /5<br>
+	</p>
+</div>
+<div class="rate-star"><p>Rate This Movie:</p>
+        <div class="star-ratings-rating-stars-container">
+            <ul class="star-ratings-rating-background">
+                {% for star in stars %}
+                    <li>
+                        {% if editable %}
+                        <a href="{% url 'ratings:rate' rating.content_type_id rating.object_id %}?return={{ request.path }}" data-score="{{ star }}" class="star-ratings-rate-action">
+                            <span class="star-ratings-rating-empty"></span>
+                        </a>
+                        {% elif user.is_authenticated %}
+                            <span class="star-ratings-rating-empty"></span>
+                        {% else %}
+                            <span class="star-ratings-rating-empty" title="{% trans 'Log in to rate' as title_login %}{{ title_login|escape }}"></span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <ul class="star-ratings-rating-foreground" style="width: {{ percentage|floatformat }}%">
+                {% for star in stars %}
+                    <li>
+                    {% if editable %}
+                    <a href="{% url 'ratings:rate' rating.content_type_id rating.object_id %}?return={{ request.path }}" data-score="{{ star }}" class="star-ratings-rate-action">
+                        <span class="star-ratings-rating-full"></span>
+                    </a>
+                    {% else %}
+                        <span class="star-ratings-rating-full" title="Log in to rate"></span>
+                    {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+</div></div>
+    {% endblock %}
+
+{% block rating_detail %}
+{% endblock %}

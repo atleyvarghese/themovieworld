@@ -7,7 +7,7 @@ from apps.accounts.forms.forms import editform
 
 
 class EditprofileView(FormView):
-    template_name = 'accounts/profile_edit.html'
+    template_name = 'accounts/profile-edit.html'
     form_class = editform
     success_url = '/account/sucess/'
 

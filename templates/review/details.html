@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-		{% load static %}
+{% load static %}
 {% load ratings %}
 {% load comments %}
 
@@ -31,6 +31,8 @@
 	<!-- CSS files -->
 		<link rel="stylesheet" href= "{% static 'css/plugins.css' %}">
 	<link rel="stylesheet" href= "{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 </head>
 <style>
 .mv-single-hero {
@@ -43,7 +45,7 @@
 <body>
 <!--preloading-->
 <div id="preloader">
-    <img class="logo" src="{% static "images/logo1.png" %}" alt="" width="119" height="58">
+    <img class="logo" src="{% static 'images/logo1.png' %}" alt="" width="119" height="58">
     <div id="status">
         <span></span>
         <span></span>
@@ -152,7 +154,7 @@
 							<span></span>
 						</div>
 				    </div>
-				    <a href="index.html"><img class="logo" src="{% static "images/logo1.png" %}" alt="" width="119" height="58"></a>
+				    <a href="/"><img class="logo" src="{% static 'images/logo1.png' %}" alt="" width="119" height="58"></a>
 			    </div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -165,7 +167,7 @@
 							Home <i class="fa fa-angle-down" aria-hidden="true"></i>
 							</a>
 							<ul class="dropdown-menu level1">
-								<li><a href="index.html">Home 01</a></li>
+								<li><a href="/">Home 01</a></li>
 								<li><a href="homev2.html">Home 02</a></li>
 								<li><a href="homev3.html">Home 03</a></li>
 							</ul>
@@ -299,34 +301,22 @@
 					<div class="social-btn">
 						{% if user.is_authenticated %}
 						{% if fav %}
-						<a href="#" onclick="newfunction({{movie.id}})" class="parent-btn"><i class="ion-heart"></i></a>
+						<a onclick="newfunction({{movie.id}})" class="parent-btn"><i id="p1" class="ion-ios-heart"></i></a>
 						{%else%}
-						<a href="#" onclick="newfunction({{movie.id}})" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+						<a onclick="newfunction({{movie.id}})" class="parent-btn"><i id="p2" class="ion-ios-heart-outline"></i>Favorites</a>
 						{% endif %}
 						{% endif %}
 						<div class="hover-bnt">
 							<a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
 							<div class="hvr-item">
-								<a href="#" class="hvr-grow"><i class="ion-social-facebook"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-twitter"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
+								<a href="https://www.facebook.com/sharer/sharer.php?u=https://devthemovieworld.herokuapp.com/{{ movie.slug }}" class="hvr-grow"><i class="ion-social-facebook"></i></a>
+								<a href="https://twitter.com/home?status=https://devthemovieworld.herokuapp.com/{{ movie.slug }}" class="hvr-grow"><i class="ion-social-twitter"></i></a>
+								<a href="https://plus.google.com/share?url=https://themovieworld.herokuapp.com/{{ movie.slug }}" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
 							</div>
 						</div>
 					</div>
 
-					<div class="movie-rate">
-						<div class="rate">
-							<i class="ion-android-star"></i>
-							<p><span>8.1</span> /10<br>
-								<span class="rv">56 Reviews</span>
-							</p>
-						</div>
-						<div>
-							<p>Rate This Movie:  </p>
-						
-						</div>
-					</div>
+					{% ratings movie %}
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
@@ -380,10 +370,14 @@
 						            </div>
 						        </div>
 						        <div id="reviews" class="tab review">
-						           <div class="row">
-						            	<div class="rv-hd">
-							            	<a href="#id_comment" class="redbtn">Write Review</a>
+									<div class="rv-hd">
+						            		<div class="div">
+							            		<h3>Reviews To</h3>
+						       	 				<h2>{{ movie.title }}</h2>
+							            	</div>
+							            	<a href="#id_comment" class="redbtn">Write A Review</a>
 						            	</div>
+						           <div class="row">
 						            	<div class="topbar-filter">
 											{% get_comment_count for review.movie movie.id as comment_count %}
 											<p>Found <span>{{ comment_count }} reviews</span> in total</p>
@@ -410,7 +404,7 @@
 													</p>
 												</div>
 											</div>
-											<p>{{ comment.comment }}</p>
+											<pre style="color:#fff;">{{ comment.comment }}</pre>
 										</div>
 									   {% endfor %}
 									   </div>
@@ -422,8 +416,9 @@
                 <input class="form-control" type="hidden" name="name" id="id_name" maxlength="50"/><br>
                 <input class="form-control" type="hidden" name="email" id="id_email"/> <br>
                 <input class="form-control" type="hidden" name="url" id="id_url"/> <br>
-                <textarea class="form-control" name="comment" required id="id_comment" cols="60" rows="5"
-                          maxlength="3000"></textarea><br>
+
+                <textarea class="form-control" style="width:97%; color:#fff; background-color:#020d18 !important;border:4px solid; border-color: rgb(165, 177, 179);" name="comment" required id="id_comment" cols="10" rows="5"
+                          maxlength="300"></textarea><br>
                 <form action="{% comment_form_target %}" method="POST">
 
                     <input type="hidden" name="honeypot" id="id_honeypot"/>
@@ -433,9 +428,12 @@
                     {{ form.security_hash }}
 
                     <input type="hidden" name="submit" onclick="return false;" value="submit">
-                    <button class="btn btn-warning btn-small btn-block" type="button" id="submit_post" value="Post">
-                        Post
+					<div class="rv-hd">
+                    <button class="redbtn" type="button" id="submit_post" value="Pbtn-block" type="buttn-block" type="butst">
+                        Post Review
                     </button>
+					</div>
+					<hr>
                 </form>
             </form>
 
@@ -544,7 +542,7 @@
 	<div class="container">
 		<div class="flex-parent-ft">
 			<div class="flex-child-ft item1">
-				 <a href="index.html"><img class="logo" src="{% static "images/logo1.png" %}" alt=""></a>
+				 <a href="/"><img class="logo" src="{% static "images/logo1.png" %}" alt=""></a>
 				 <p>5th Avenue st, manhattan<br>
 				New York, NY 10001</p>
 				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
@@ -613,37 +611,37 @@ $.ajax({
     data:{'id':id},
     success:function(data){
     data1 = JSON.parse(data)
-    //console.log(data.status);
-    //debugger
+
+
     if(data1["status"]==1)
-    {        console.log('if');
+    {
 
         var x = document.getElementById("p2");
         var y = document.getElementById("p1");
 if(w=="True"){
-        y.classList.remove("fa-heart-o");
-        y.classList.add("fa-heart");}
+        y.classList.remove("ion-ios-heart-outline");
+        y.classList.add("ion-ios-heart");}
 else{
-x.classList.remove("fa-heart-o");
-        x.classList.add("fa-heart");}
+x.classList.remove("ion-ios-heart-outline");
+        x.classList.add("ion-ios-heart");}
 
 
     }
     else if(data1["status"]==0)
-    {        console.log('elseif');
+    {
 
         var y = document.getElementById("p1");
         var x = document.getElementById("p2");
         if(w=="True"){
-                y.classList.remove("fa-heart");
+                y.classList.remove("ion-ios-heart");
 
-        y.classList.add("fa-heart-o");}
+        y.classList.add("ion-ios-heart-outline");}
         else{
-        x.classList.remove("fa-heart");
-        x.classList.add("fa-heart-o");}
+        x.classList.remove("ion-ios-heart");
+        x.classList.add("ion-ios-heart-outline");}
     }
     else
-    {        console.log('else');
+    {
 
         var x = document.getElementById("p1");
         x.classList.toggle("fa-heart");

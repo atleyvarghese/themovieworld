@@ -152,7 +152,7 @@ class FavouriteView(ListView):
         To display favourite movies for authenticated user
     """
     model = Favorites
-    template_name = 'review/home.html'
+    template_name = 'review/fav.html'
     paginate_by = 9
     context_object_name = 'movies'
 

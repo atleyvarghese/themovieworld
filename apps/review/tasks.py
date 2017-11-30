@@ -22,6 +22,7 @@ def collect_movie():
             imdb_id = int(imdb_id.replace("t", ""))
             ia = imdb.IMDb()
             imdb_object = ia.get_movie(imdb_id)
+            movies.title = movie.title
             url='https://image.tmdb.org/t/p/w500/'+movie.poster_path+'?api_key=22ce6e6a848dfc0fd4376e55d8890949'
             Movie.objects.create(title=movie.title,synopsis=movie.overview,rel_date=movie.release_date,
                                   image=url,popularity=movie.popularity,runtime=movie.runtime,imdb_rating=imdb_object['rating'])

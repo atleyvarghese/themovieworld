@@ -1,0 +1,96 @@
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="{% url 'account_login' %}" id="LoginForm" name="LoginForm">
+			{% csrf_token %}
+
+
+                        <div class="alert alert-warning alert-dismissable fade in">
+                            <a class="panel-close close" data-dismiss="alert">×</a>
+                            <p id="pText"></p>
+                        </div>
+
+        	<div class="row">
+        		 <label for="form.id_login">
+                    Username:
+                    <input type="text" name="login" id="form.id_login" placeholder="Username" required="required" />
+                </label>
+        	</div>
+
+            <div class="row">
+            	<label for="form.id_password">
+                    Password:
+                    <input type="password" name="password" required="" placeholder="Password" id="form.id_password"  required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form role="form" METHOD="post" action="{% url 'account_signup' %}" id="SignupForm">
+            {% csrf_token %}
+
+
+                        <div class="alert alert-warning alert-dismissable fade in">
+                            <a class="panel-close close" data-dismiss="alert">×</a>
+                            <p id="1pText"></p>
+                        </div>
+
+            <div class="row">
+                 <label for="id_username">
+                    Username:
+                    <input type="text" name="username" minlength="1" placeholder="Username"
+                                           id="id_username" maxlength="150" required="" />
+                </label>
+            </div>
+
+            <div class="row">
+                <label for="id_email">
+                    your email:
+<input type="email" name="email" required="" autofocus="autofocus"
+                                           placeholder="E-mail address" id="id_email" />                </label>
+            </div>
+             <div class="row">
+                <label for="id_password1">
+                    Password:
+                    <input type="password" name="password1" required="" id="id_password1" placeholder="Password" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="id_password2">
+                    re-type Password:
+                    <input type="password" name="password2" required="" id="id_password2"
+                                                   class="form-control input-sm" placeholder="Confirm Password" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->

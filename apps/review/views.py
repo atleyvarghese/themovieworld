@@ -15,13 +15,14 @@ class MovieListView(ListView):
     template_name = 'review/index.html'
     paginate_by = 16
     context_object_name = 'movies'
-    queryset = Movie.objects.all().order_by('-rel_date')
+    queryset = Movie.objects.all().order_by('-rel_date')[:10]
 
     def get_context_data(self, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
         context['genres'] = Genre.objects.all()
         context['type'] = _('Latest')
         context['title'] = _('Movies')
+        context['popular'] = Movie.objects.all().order_by('-popularity')[:10]
         return context
 
 

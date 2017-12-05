@@ -3,7 +3,6 @@
  * version: 2.1.5 (Fri, 14 Jun 2013)
  * requires jQuery v1.6 or later
  *
- * Examples at http://fancyapps.com/fancybox/
  * License: www.fancyapps.com/fancybox/#license
  *
  * Copyright 2012 Janis Skarnelis - janis@fancyapps.com
@@ -651,7 +650,7 @@
 				rez.h = locked[0].clientHeight;
 
 			} else {
-				// See http://bugs.jquery.com/ticket/6724
+
 				rez.w = isTouch && window.innerWidth  ? window.innerWidth  : W.width();
 				rez.h = isTouch && window.innerHeight ? window.innerHeight : W.height();
 			}
@@ -1655,7 +1654,7 @@
 				}
 			}
 
-			// Workaround for http://bugs.jquery.com/ticket/12273
+
 			if (effect === 'none') {
 				F._afterZoomIn();
 
@@ -1974,7 +1973,7 @@
 		var w1, w2;
 
 		if ( $.scrollbarWidth === undefined ) {
-			// http://benalman.com/projects/jquery-misc-plugins/#scrollbarwidth
+
 			$.scrollbarWidth = function() {
 				var parent = $('<div style="width:50px;height:50px;overflow:auto"><div/></div>').appendTo('body'),
 					child  = parent.children(),
@@ -2054,32 +2053,7 @@
  *
  *  Supports:
  *
- *      Youtube
- *          http://www.youtube.com/watch?v=opj24KnzrWo
- *          http://www.youtube.com/embed/opj24KnzrWo
- *          http://youtu.be/opj24KnzrWo
- *			http://www.youtube-nocookie.com/embed/opj24KnzrWo
- *      Vimeo
- *          http://vimeo.com/40648169
- *          http://vimeo.com/channels/staffpicks/38843628
- *          http://vimeo.com/groups/surrealism/videos/36516384
- *          http://player.vimeo.com/video/45074303
- *      Metacafe
- *          http://www.metacafe.com/watch/7635964/dr_seuss_the_lorax_movie_trailer/
- *          http://www.metacafe.com/watch/7635964/
- *      Dailymotion
- *          http://www.dailymotion.com/video/xoytqh_dr-seuss-the-lorax-premiere_people
- *      Twitvid
- *          http://twitvid.com/QY7MD
- *      Twitpic
- *          http://twitpic.com/7p93st
- *      Instagram
- *          http://instagr.am/p/IejkuUGxQn/
- *          http://instagram.com/p/IejkuUGxQn/
- *      Google maps
- *          http://maps.google.com/maps?q=Eiffel+Tower,+Avenue+Gustave+Eiffel,+Paris,+France&t=h&z=17
- *          http://maps.google.com/?ll=48.857995,2.294297&spn=0.007666,0.021136&t=m&z=16
- *          http://maps.google.com/?ll=48.859463,2.292626&spn=0.000965,0.002642&t=m&z=19&layer=c&cbll=48.859524,2.292532&panoid=YJ0lq28OOy3VT2IqIuVY0g&cbp=12,151.58,,0,-15.56
+ *      
  */
 ;(function ($) {
 	"use strict";

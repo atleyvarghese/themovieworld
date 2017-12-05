@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^',include('apps.review.urls')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [url(r'^media/(?P<path>.*)$', serve,
                    {'document_root': settings.MEDIA_ROOT, }),

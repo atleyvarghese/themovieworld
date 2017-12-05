@@ -5667,7 +5667,7 @@ ul {
   height: 598px;
 }
 .hero3 {
-  background: url('../images/uploads/celeb-hero-single.jpg') no-repeat;
+  background: url("/static/images/uploads/actor.png") no-repeat;
   height: 538px;
 }
 .common-hero {

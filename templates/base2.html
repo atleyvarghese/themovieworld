@@ -134,6 +134,7 @@ $('#SignupForm').submit(function() {
             error: function(textStatus) {
         console.log(textStatus.responseJSON['form']['errors'][0])
         document.getElementById('1pText').innerHTML = textStatus.responseJSON['form']['errors'][0]
+
         },
             success: function(response) {
             location.reload();

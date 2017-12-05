@@ -26,7 +26,13 @@
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
 					<div class="user-img">
-						<a href="#"><img src="{% static 'images/uploads/default.jpg' %}" alt=""><br></a>
+						{% if user.userprofile.avatar %}
+						<a href="#"><img style="max-width:70%;" src="{{ user.userprofile.avatar.url }}" alt=""><br></a>
+						{% elif user.userprofile.profile_picture_url %}
+						<a href="#"><img style="max-width:70%;" src="{{ user.userprofile.profile_picture_url }}" alt=""><br></a>
+						{% else %}
+						<a href="#"><img style="max-width:70%;" src="{% static 'images/uploads/default.jpg' %}" alt=""><br></a>
+						{% endif %}
 						<a href="#" class="redbtn">Change avatar</a>
 					</div>
 					<div class="user-fav">

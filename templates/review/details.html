@@ -83,7 +83,7 @@
 						            			<h6>Director: </h6>
 												{% for item,it in  roles1 %}
 												{% if "Director" in it.role %}
-												<p><a href="#">{{ item.name }}</a></p>
+												<p><a href="{% url 'people-detail' item.slug %}">{{ item.name }}</a></p>
 												{% endif %}
 												{% endfor %}
 						            		</div>
@@ -91,7 +91,7 @@
 						            			<h6>Writer: </h6><p>
 						            			{% for item1,it1 in roles1 %}
 												{% if "Writer" in it1.role %}
-												<a href="#">{{ item1.name }},</a>
+												<a href="{% url 'people-detail' item1.slug %}">{{ item1.name }},</a>
 												{% endif %}
 												{% endfor %}</p>
 						            		</div>
@@ -220,7 +220,7 @@
 											<div class="cast-it">
 												<div class="cast-left">
 													<img style="max-width:10%;" src="{% static "images/uploads/default.jpg" %}" alt="">
-													<a href="#">{{ item1.name }}</a>
+													<a href="{% url 'people-detail' item1.slug %}">{{ item1.name }}</a>
 												</div>
 												<p>{{ it1.role }}</p>
 											</div>
@@ -238,7 +238,7 @@
 											<div class="cast-it">
 												<div class="cast-left">
 													<img style="max-width:10%;" src="{% static "images/uploads/default.jpg" %}" alt="">
-													<a href="#">{{ item1.name }}</a>
+													<a href="{% url 'people-detail' item1.slug %}">{{ item1.name }}</a>
 												</div>
 												<p>{{ it1.role }}</p>
 											</div>
@@ -284,4 +284,46 @@
 		</div>
 	</div>
 </div>
+<script>
+function newfunction(id) {
+var w ="{{fav}}"
+//console.log(w);
+$.ajax({
+    type: "GET",
+    url: "/favorites/",
+    dataType: "html",
+    data:{'id':id},
+    success:function(data){
+    data1 = JSON.parse(data)
+    if(data1["status"]==1)
+    {
+        var x = document.getElementById("p2");
+        var y = document.getElementById("p1");
+if(w=="True"){
+        y.classList.remove("ion-ios-heart-outline");
+        y.classList.add("ion-ios-heart");}
+else{
+x.classList.remove("ion-ios-heart-outline");
+        x.classList.add("ion-ios-heart");}
+    }
+    else if(data1["status"]==0)
+    {
+        var y = document.getElementById("p1");
+        var x = document.getElementById("p2");
+        if(w=="True"){
+                y.classList.remove("ion-ios-heart");
+        y.classList.add("ion-ios-heart-outline");}
+        else{
+        x.classList.remove("ion-ios-heart");
+        x.classList.add("ion-ios-heart-outline");}
+    }
+    else
+    {
+        var x = document.getElementById("p1");
+        x.classList.toggle("fa-heart");
+    }
+    },
+});
+};
+</script>
 {% endblock %}

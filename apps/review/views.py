@@ -70,6 +70,7 @@ class PeopleDetailView(DetailView):
         people = CastAndCrew.objects.get(slug=self.kwargs['slug'])
         context['people'] = people
         context['title'] = people.name
+        context['flim'] = Movie.objects.filter(cast__slug=self.kwargs['slug'])
         return context
 
 

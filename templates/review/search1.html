@@ -1,0 +1,137 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load ratings %}
+{% load comments %}
+{% block content %}
+{{ block.super }}
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Search - Movies</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="topbar-filter">
+					<p>Found <span>{{ movies.count }} movies</span> in total</p>
+					<label>Sort by:</label>
+					<select>
+						<option value="popularity">Popularity Descending</option>
+						<option value="popularity">Popularity Ascending</option>
+						<option value="rating">Rating Descending</option>
+						<option value="rating">Rating Ascending</option>
+						<option value="date">Release date Descending</option>
+						<option value="date">Release date Ascending</option>
+					</select>
+					<a href="movielist.html" class="list"><i class="ion-ios-list-outline "></i></a>
+					<a  href="moviegrid.html" class="grid"><i class="ion-grid active"></i></a>
+				</div>
+				<div id="results">
+				<div class="flex-wrap-movielist">
+
+                    {% for item in movies %}
+						<div class="movie-item-style-2 movie-item-style-1">
+							<img style="width:170px; height:255px;" src="{{ item.image }}" alt="">
+							<div class="hvr-inner">
+	            				<a  href="{% url 'detail' item.slug %}"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+	            			</div>
+						</div>
+                    {% endfor %}
+						</div>
+				</div>
+				<div class="topbar-filter">
+					<label>Movies per page:</label>
+					<select>
+						<option value="range">20 Movies</option>
+						<option value="saab">10 Movies</option>
+					</select>
+
+					<div class="pagination2">
+						<span>Page 1 of 2:</span>
+						<a class="active" href="#">1</a>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">...</a>
+						<a href="#">78</a>
+						<a href="#">79</a>
+						<a href="#"><i class="ion-arrow-right-b"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="sidebar">
+					<div class="searh-form">
+						<h4 class="sb-title">Search for movie</h4>
+						<form class="form-style-1" id="SearchForm">
+							<div class="row">
+								<div class="col-md-12 form-it">
+									<label>Movie name</label>
+									<input name="q" id="q" type="text" placeholder="Enter Movie name">
+								</div>
+								<div class="col-md-12 form-it">
+									<label>Genres</label>
+									<div class="group-ip">
+										<select
+											name="genre" id="genre" multiple="multiple" class="ui fluid dropdown">
+											<option value="" disabled selected>Select Genre</option>
+											{% for item1 in genres %}
+											<option value="{{ item1.name }}">{{ item1.name }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12 form-it">
+									<label>IMDB Rating </label>
+									<select id="rating" name="rating">
+									  <option selected value="1">1+</option>
+									  <option value="2">2+</option>
+										<option value="3">3+</option>
+									  <option value="4">4+</option>
+										<option value="5">5+</option>
+									  <option value="6">6+</option>
+										<option value="7">7+</option>
+									  <option value="8">8+</option>
+										<option value="9">9+</option>
+									</select>
+								</div>
+								<div class="col-md-12 ">
+									<input class="submit" type="button" value="submit" id="p">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+        type="text/javascript"></script>
+<script>
+
+$('#p').click( function() {
+data1 = $('#SearchForm').serialize()
+console.log(data1)
+$.ajax({
+    type: "GET",
+    url: "/search1/",
+    data: data1,
+    success: function(data) {
+                         $('#results').html(data);
+    },
+    });
+});
+
+</script>
+{% endblock %}

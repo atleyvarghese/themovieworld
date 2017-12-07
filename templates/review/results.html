@@ -1,0 +1,10 @@
+<div class="flex-wrap-movielist">
+                    {% for item in results %}
+						<div class="movie-item-style-2 movie-item-style-1">
+							<img style="width:170px; height:255px;" src="{{ item.image }}" alt="">
+							<div class="hvr-inner">
+	            				<a  href="{% url 'detail' item.slug %}"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+	            			</div>
+						</div>
+                    {% endfor %}
+				</div>

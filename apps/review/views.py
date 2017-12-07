@@ -1,8 +1,10 @@
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 
+from apps.review.forms import SearchForm
 from apps.review.models import Movie, Favorites, Genre, CastAndCrew
 from .tasks import collect_movie, collect_a_movie
 
@@ -122,9 +124,7 @@ class SearchView(ListView):
     """
             for users to search for Movies based on Movie name, Genre, Latest, Oldest
     """
-    model = Movie
-    paginate_by = 6
-    template_name = 'review/search.html'
+    template_name = 'review/search1.html'
     context_object_name = 'movies'
 
     def get_queryset(self,**kwargs):
@@ -139,6 +139,14 @@ class SearchView(ListView):
             else:
                 return Movie.objects.filter(genre__name=self.request.GET['genre']).filter(
                         Q(title__icontains=self.request.GET['name'])).order_by(order)
+        if self.request.GET.getlist('genre'):
+            genre_list = self.request.GET.getlist('genre')
+            # Movie.objects.filter(genre__name__in=genre_list).distinct()
+            movies = Movie.objects.all()
+            print(genre_list)
+            for x in genre_list:
+                movies = movies.filter(genre__name=x)
+            return movies
         else:
             return Movie.objects.all().order_by('-rel_date')
 
@@ -147,6 +155,24 @@ class SearchView(ListView):
         context['genres'] = Genre.objects.all()
         context['title'] = _('Search')
         return context
+
+class SearchView1(ListView):
+    model = Movie
+    template_name = 'review/results.html'
+    context_object_name = 'results'
+
+    def get_queryset(self, **kwargs):
+        movies = Movie.objects.all()
+        if self.request.GET.getlist('genre'):
+            genre_list = self.request.GET.getlist('genre')
+            for x in genre_list:
+                movies = movies.filter(genre__name=x)
+        if self.request.GET.get('q'):
+            movies = movies.filter(title__icontains=self.request.GET.get('q'))
+        if self.request.GET.get('rating'):
+            movies = movies.filter(imdb_rating__gte=self.request.GET.get('rating'))
+        return movies.order_by('-rel_date')
+
 
 
 class FavouriteView(ListView):

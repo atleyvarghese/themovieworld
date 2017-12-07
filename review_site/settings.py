@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'star_ratings',
+    'debug_toolbar'
 
 ]
 
@@ -60,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'review_site.urls'
@@ -234,3 +237,5 @@ STATICFILES_FINDERS = (
 #         'schedule': crontab(minute='*/5'),
 #     }
 # }
+
+INTERNAL_IPS = '127.0.0.1'

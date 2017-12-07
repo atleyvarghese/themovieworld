@@ -21,3 +21,9 @@ admin.site.site_header = ('Movie World')
 admin.site.index_title = ('Movie World')
 admin.site.site_title = ('Admin')
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+

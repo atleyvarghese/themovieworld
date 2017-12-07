@@ -10,3 +10,4 @@ whitenoise==3.3.0
 gunicorn==19.7.1
 django-star-ratings
 IMDbPY
+django-debug-toolbar

@@ -6,10 +6,7 @@
 			{% csrf_token %}
 
 
-                        <div class="alert alert-warning alert-dismissable fade in">
-                            <a class="panel-close close" data-dismiss="alert">×</a>
-                            <p id="pText"></p>
-                        </div>
+                            <p id="pText" class="message_error"></p>
 
         	<div class="row">
         		 <label for="form.id_login">
@@ -50,15 +47,12 @@
 <div class="login-wrapper"  id="signup-content">
     <div class="login-content">
         <a href="#" class="close">x</a>
-        <h3>sign up</h3>
+        <h3>Sign Up</h3>
         <form role="form" METHOD="post" action="{% url 'account_signup' %}" id="SignupForm">
-            {% csrf_token %}
 
 
-                        <div class="alert alert-warning alert-dismissable fade in">
-                            <a class="panel-close close" data-dismiss="alert">×</a>
-                            <p id="1pText"></p>
-                        </div>
+                                                    <p id="1pText" class="message_error"></p>
+
 
             <div class="row">
                  <label for="id_username">
@@ -93,4 +87,5 @@
         </form>
     </div>
 </div>
+
 <!--end of signup form popup-->

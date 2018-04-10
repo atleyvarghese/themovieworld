@@ -8,3 +8,31 @@
 						</div>
                     {% endfor %}
 				</div>
+<div class="topbar-filter">
+					<label>Movies per page:</label>
+					<select>
+						<option value="range">20 Movies</option>
+						<option value="saab">10 Movies</option>
+					</select>
+
+					<div class="pagination2">
+						{% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                {% else %}
+                <a class="disabled">&laquo;</a>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                <a class="active">{{ i }}</a>
+                {% else %}
+               <a href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                {% else %}
+                <a class="disabled"><span>&raquo;</span></a>
+                {% endif %}
+					</div>
+				</div>
+			</div>

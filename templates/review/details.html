@@ -122,7 +122,9 @@
 							            		<h3>Reviews To</h3>
 						       	 				<h2>{{ movie.title }}</h2>
 							            	</div>
+										{% if user.is_authenticated %}
 							            	<a href="#id_comment" class="redbtn">Write A Review</a>
+										{% endif %}
 						            	</div>
 						           <div class="row">
 						            	<div class="topbar-filter">
@@ -188,21 +190,7 @@
             <p> Please <a href="/account/login/">log in</a> to leave a comment.</p>
             {% endif %}
 										<div class="topbar-filter">
-											<label>Reviews per page:</label>
-											<select>
-												<option value="range">5 Reviews</option>
-												<option value="saab">10 Reviews</option>
-											</select>
-											<div class="pagination2">
-												<span>Page 1 of 6:</span>
-												<a class="active" href="#">1</a>
-												<a href="#">2</a>
-												<a href="#">3</a>
-												<a href="#">4</a>
-												<a href="#">5</a>
-												<a href="#">6</a>
-												<a href="#"><i class="ion-arrow-right-b"></i></a>
-											</div>
+
 										</div>
 						            </div>
 						        </div>

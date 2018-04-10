@@ -126,40 +126,46 @@ class SearchView(ListView):
     """
     template_name = 'review/search1.html'
     context_object_name = 'movies'
+    paginate_by = 8
 
     def get_queryset(self,**kwargs):
-        if 'order' in self.request.GET:
-            if self.request.GET['order']=='Latest':
-                order='-rel_date'
-            else:
-                order = 'rel_date'
-            if self.request.GET['genre']=='All':
-                return Movie.objects.filter(
-                        Q(title__icontains=self.request.GET['name'])).order_by(order)
-            else:
-                return Movie.objects.filter(genre__name=self.request.GET['genre']).filter(
-                        Q(title__icontains=self.request.GET['name'])).order_by(order)
+        # import pdb
+        # pdb.set_trace()
+        movies = Movie.objects.all()
         if self.request.GET.getlist('genre'):
             genre_list = self.request.GET.getlist('genre')
-            # Movie.objects.filter(genre__name__in=genre_list).distinct()
-            movies = Movie.objects.all()
-            print(genre_list)
             for x in genre_list:
                 movies = movies.filter(genre__name=x)
-            return movies
-        else:
-            return Movie.objects.all().order_by('-rel_date')
+        if self.request.GET.get('q'):
+            movies = movies.filter(title__icontains=self.request.GET.get('q'))
+        if self.request.GET.get('rating'):
+            movies = movies.filter(imdb_rating__gte=self.request.GET.get('rating'))
+        if self.request.GET.get('sort'):
+            return movies.order_by(self.request.GET.get('sort'))
+        return movies.order_by('-rel_date')
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context['genres'] = Genre.objects.all()
         context['title'] = _('Search')
+        context['count'] = self.get_queryset().count()
+        if self.request.GET.get('q'):
+            context['q'] = self.request.GET.get('q')
+        if self.request.GET.get('rating'):
+            context['rating'] = int(self.request.GET.get('rating'))
+        else:
+            context['rating'] = 1
+        if self.request.GET.get('sort'):
+            context['sort'] = self.request.GET.get('sort')
+        else:
+            context['sort'] = 'rel_date'
         return context
 
 class SearchView1(ListView):
     model = Movie
     template_name = 'review/results.html'
     context_object_name = 'results'
+    paginate_by = 6
 
     def get_queryset(self, **kwargs):
         movies = Movie.objects.all()
@@ -234,7 +240,7 @@ class CategoryView(ListView):
 
     def get_queryset(self, **kwargs):
         category = self.kwargs['category']
-        if category=='latest':
+        if category == 'latest':
             return Movie.objects.all().order_by('-rel_date')[:9]
         else:
             return Movie.objects.all().order_by('-popularity')

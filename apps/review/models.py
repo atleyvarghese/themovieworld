@@ -44,6 +44,7 @@ class CastAndCrew(models.Model):
     api_id = models.IntegerField()
     biography = models.TextField(_('Biography'), default='Biography yet to added',null=True, blank=True)
     image = models.URLField(_('Image'), null=True, blank=True)
+    image_thumbnail = models.URLField(_('Image_thumbnail'), null=True, blank=True)
     popularity=models.IntegerField(default=1,null=True, blank=True)
     slug = AutoSlugField(populate_from='name',
                          unique_with=['api_id'],
